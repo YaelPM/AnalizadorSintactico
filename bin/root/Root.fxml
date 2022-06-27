@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	
+
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
-	
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="root.RootController">
-	<!-- TODO Add Nodes -->
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane minHeight="400.0" minWidth="400.0" prefHeight="436.0" prefWidth="556.0" style="-fx-background-color: #245551;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="root.RootController">
+   <children>
+      <Text fill="WHITE" layoutX="168.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Analizador sintáctico">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextArea layoutX="22.0" layoutY="60.0" prefHeight="316.0" prefWidth="309.0" promptText="Ingrese su script en este espacio :)" style="-fx-border-color: #381030; -fx-border-width: 5;">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextArea>
+   </children>
 </AnchorPane>

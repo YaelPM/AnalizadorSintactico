@@ -23,15 +23,18 @@ public class AnalizadorSintactico {
 	 */
 
 	public void checarDatos() {
-		while (aux<=30) {
+		while (datosDeEntrada.isEmpty()== false) {
 			aux++;
 			System.out.println("Peek inicial: " + stack.peek());
 			System.out.println("Apuntador: " + datosDeEntrada.get(0));
+			// Si lo que hay arriba de la pila es terminal
 			if (stack.peek().equals(datosDeEntrada.get(0))) {
 				System.out.println(datosDeEntrada.get(0) + " is correct");
 				stack.pop();
 				datosDeEntrada.remove(0);
 			} else {
+				//Si lo que hay arriba de la pila es no terminal
+				
 				// Tabla-> CrearTabla Nombre ParentesisApertura ColumnaInicial Columna
 				// LlaveForanea ParentesisCierre Engine PuntoYComa
 				if (stack.peek().equals("Tabla")) {
@@ -39,7 +42,6 @@ public class AnalizadorSintactico {
 					stack.push("PuntoYComa");
 					stack.push("Engine");
 					stack.push("ParentesisCierre");
-					stack.push("PuntoYComa");
 					stack.push("LlaveForanea");
 					stack.push("Columna");
 					stack.push("ColumnaInicial");
@@ -50,7 +52,7 @@ public class AnalizadorSintactico {
 				// RCrearTablas-> CrearTablas RCrearTablas | vacio
 				if (stack.peek().equals("RCrearTablas")) {
 					stack.pop();
-					stack.push("RCrearTablas");
+					// stack.push("RCrearTablas");
 					stack.push("CrearTablas");
 				}
 				// CrearTabla-> Create Table
@@ -108,8 +110,12 @@ public class AnalizadorSintactico {
 				// RestoDeColumnas-> Columna RestoDeColumnas | vacio
 				if (stack.peek().equals("RestoDeColumnas")) {
 					stack.pop();
-					stack.push("RestoDeColumnas");
-					stack.push("Columna");
+					if(datosDeEntrada.get(0).equals("FOREING")) {
+						stack.pop();
+					}else {
+						stack.push("RestoDeColumnas");
+						stack.push("Columna");
+					}
 				}
 				// Tipo-> bigint | binary | bit | blob | bool | boolean | char | character |
 				// date | datetime | decimal | double | int | integer | json | linestring | long
@@ -146,12 +152,65 @@ public class AnalizadorSintactico {
 					stack.push("KEY");
 					stack.push("PRIMARY");
 				}
+				// Foreing-> F K
+				if (stack.peek().equals("Foreing")) {
+					stack.pop();
+					stack.push("K");
+					stack.push("F");
+				}
+				// F-> FOREING
+				if (stack.peek().equals("F")) {
+					stack.pop();
+					stack.push("FOREING");
+				}
+				// K-> KEY
+				if (stack.peek().equals("K")) {
+					stack.pop();
+					stack.push("KEY");
+				}
 				// Coma-> ,
 				if (stack.peek().equals("Coma")) {
 					stack.pop();
 					stack.push(",");
 				}
-				
+				// LlaveForanea-> Foreing ParentesisApertura Nombre ParentesisCierre References 
+				// Nombre ParentesisApertura Nombre ParensesisCierre | VACIO
+				if (stack.peek().equals("LlaveForanea")) {
+					stack.pop();
+					stack.push("ParentesisCierre");
+					stack.push("Nombre");
+					stack.push("ParentesisApertura");
+					stack.push("Nombre");
+					stack.push("References");
+					stack.push("ParentesisCierre");
+					stack.push("Nombre");
+					stack.push("ParentesisApertura");
+					stack.push("Foreing");
+				}
+				// ParentesisCierre-> )
+				if (stack.peek().equals("ParentesisCierre")) {
+					stack.pop();
+					stack.push(")");
+				}
+				// References-> REFERENCES
+				if (stack.peek().equals("References")) {
+					stack.pop();
+					stack.push("REFERENCES");
+				}
+				// Engine-> ENGINE=InnoDB
+				if (stack.peek().equals("Engine")) {
+					stack.pop();
+					stack.push("ENGINE=InnoDB");
+				}
+				// PuntoYComa-> ;
+				if (stack.peek().equals("PuntoYComa")) {
+					stack.pop();
+					stack.push(";");
+				}
+				/*if(stack.contains(datosDeEntrada.get(0))== false) {
+					System.out.println("Error en "+ datosDeEntrada.get(0));
+					System.exit(1);
+				}*/
 			}
 		}
 	}

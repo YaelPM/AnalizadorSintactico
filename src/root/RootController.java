@@ -14,10 +14,10 @@ public class RootController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// Generando datos de entrada
-		DatosDeEntrada = "CREATE TABLE 'images' ( \n" + "  'idimages' int NOT_NULL AUTO_INCREMENT PRIMARY KEY ,\r\n"
+		DatosDeEntrada = "CREATE TABLE 'images' ( \n" + "  'idimages' in NOT_NULL AUTO_INCREMENT PRIMARY KEY ,\r\n"
 				+ "  'type' varchar NOT_NULL ,\r\n" + "  'name' varchar NOT_NULL ,\r\n"
 				+ "  'data' mediumblob NOT_NULL ,\r\n" + "  'userId' int NOT_NULL ,\r\n"
-				+ "  PRIMARY KEY (`idimages`)\r\n" + ") ENGINE=InnoDB ;";
+				+ "  FOREING KEY ( 'idimages' ) REFERENCES 'users' ( 'idUser' )\r\n" + ") ENGINE=InnoDB ;";
 		System.out.println(DatosDeEntrada);
 		String[] DatosDeEntradaDivididos = DatosDeEntrada.split("\\s+");
 		ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(DatosDeEntradaDivididos));
